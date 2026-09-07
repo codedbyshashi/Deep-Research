@@ -57,6 +57,10 @@ nvidia_model = OpenAIChatCompletionsModel(
     openai_client=nvidia_client,
     model="nvidia/nemotron-3-super-120b-a12b:free",
 )
+nvidia_model2 = OpenAIChatCompletionsModel(
+    openai_client=nvidia_client,
+    model="nvidia/nemotron-3.5-lightning:free",
+)
 groq_model = OpenAIChatCompletionsModel(
     openai_client=groq_client,
     model="llama-3.3-70b-versatile",
