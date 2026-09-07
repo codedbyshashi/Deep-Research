@@ -1,25 +1,69 @@
 from pydantic import BaseModel, Field
 from agents import Agent
 from dotenv import load_dotenv
-import os
-from config import gemini_model
+
+from config import gemini_model, nvidia_model
 
 load_dotenv(override=True)
-# MODEL_NAME = os.getenv("DEFAULT_MODEL_NAME", "gpt-5.4-mini")
+
 
 INSTRUCTIONS = """
-You are a senior researcher tasked with writing a cohesive report for a research query.
-You will be provided with the original query, and some research.
-Generate a comprehensive report based on the research and the query.
-The final output should be in markdown format, and it should be lengthy and detailed. Aim 
-for 5-10 pages of content, at least 1000 words.
+You are a senior research writer.
+
+Your task is to write the FINAL, COMPLETE research report for the
+user's research query using the research provided to you.
+
+IMPORTANT RULES:
+
+1. The `markdown_report` field MUST contain the complete report.
+2. Actually write the report. Do not describe what the report should contain.
+3. NEVER use placeholders such as:
+   - "(full report)"
+   - "..."
+   - "[insert report here]"
+   - "[report continues]"
+   - "etc."
+4. NEVER abbreviate or truncate the report.
+5. Do not return a plan for the report. Return the actual report.
+6. Use only information supported by the provided research.
+7. If evidence is uncertain or conflicting, clearly indicate that.
+8. Organize the report using Markdown headings.
+9. Include an introduction, main findings, supporting evidence,
+   analysis, and conclusion.
+10. Include relevant source links/citations from the research when available.
+11. Write approximately 1000-1500 words when enough research is available.
+12. The `short_summary` must contain only a concise 2-3 sentence summary.
+13. `follow_up_questions` should contain useful questions that could
+    be researched next.
+
+The output must be a complete research report, not a description of a report.
+
+Before finishing, verify that `markdown_report` contains the actual
+full Markdown report and does not contain placeholders or abbreviated text.
 """
 
 
 class ReportData(BaseModel):
-    short_summary: str = Field(description="A short 2-3 sentence summary of the findings.")
-    markdown_report: str = Field(description="The final report")
-    follow_up_questions: list[str] = Field(description="Suggested topics to research further")
+    short_summary: str = Field(
+        description="A concise 2-3 sentence summary of the research findings."
+    )
+
+    markdown_report: str = Field(
+        description=(
+            "The COMPLETE final research report in Markdown. "
+            "This field must contain the actual report, not a summary, "
+            "plan, placeholder, or description."
+        )
+    )
+
+    follow_up_questions: list[str] = Field(
+        description="Suggested topics or questions for further research."
+    )
 
 
-writer_agent = Agent(name="Writer Agent", instructions=INSTRUCTIONS, model=gemini_model, output_type=ReportData)
+writer_agent = Agent(
+    name="Writer Agent",
+    instructions=INSTRUCTIONS,
+    model=nvidia_model,
+    output_type=ReportData,
+)

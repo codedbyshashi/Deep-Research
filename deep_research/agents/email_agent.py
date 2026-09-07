@@ -6,7 +6,8 @@ from config import openrouter_model
 load_dotenv(override=True)
 
 # MODEL_NAME = os.getenv("DEFAULT_MODEL_NAME", "gpt-5.4-mini")
-USE_EMAIL = os.getenv("USE_EMAIL", "true").lower() == "true"
+USE_EMAIL = True
+# USE_EMAIL = os.getenv("USE_EMAIL", "true").lower() == "true"
 
 settings = ModelSettings(tool_choice="required")
 

@@ -24,6 +24,11 @@ openrouter_client = AsyncOpenAI(
     api_key=openrouter_api_key,
 )
 
+nvidia_client = AsyncOpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=openrouter_api_key,
+)
+
 
 # Gemini client
 gemini_client = AsyncOpenAI(
@@ -42,6 +47,11 @@ openrouter_model = OpenAIChatCompletionsModel(
 gemini_model = OpenAIChatCompletionsModel(
     openai_client=gemini_client,
     model="gemini-3.5-flash-lite",
+)
+
+nvidia_model = OpenAIChatCompletionsModel(
+    openai_client=nvidia_client,
+    model="nvidia/nemotron-3-super-120b-a12b:free",
 )
 
 
