@@ -1,6 +1,4 @@
 import gradio as gr
-import spaces
-
 from dotenv import load_dotenv
 from research_manager import ResearchManager
 from styles import CSS, JS, EXAMPLES, HEADER_HTML
@@ -8,20 +6,9 @@ from styles import CSS, JS, EXAMPLES, HEADER_HTML
 load_dotenv(override=True)
 
 
-@spaces.GPU
-async def run_research(query: str):
-    """Run the research process and return the final report."""
-    final_report = ""
-
-    async for status_update in ResearchManager().run(query):
-        final_report = status_update
-
-    return final_report
-
-
 async def run(query: str):
-    """Gradio handler."""
-    return await run_research(query)
+    async for status_update in ResearchManager().run(query):
+        yield status_update
 
 
 with gr.Blocks(title="Deep Research") as ui:
@@ -69,6 +56,8 @@ with gr.Blocks(title="Deep Research") as ui:
 
 if __name__ == "__main__":
     ui.launch(
+        server_name="0.0.0.0",
+        server_port=int(__import__("os").environ.get("PORT", 7860)),
         css=CSS,
         js=JS,
         theme=gr.themes.Base(),
