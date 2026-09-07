@@ -2,3 +2,4 @@ openai-agents
 openai
 python-dotenv
 pydantic
+tavily-python
