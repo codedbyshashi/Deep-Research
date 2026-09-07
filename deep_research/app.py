@@ -9,9 +9,19 @@ load_dotenv(override=True)
 
 
 @spaces.GPU
-async def run(query: str):
+async def run_research(query: str):
+    """Run the research process and return the final report."""
+    final_report = ""
+
     async for status_update in ResearchManager().run(query):
-        yield status_update
+        final_report = status_update
+
+    return final_report
+
+
+async def run(query: str):
+    """Gradio handler."""
+    return await run_research(query)
 
 
 with gr.Blocks(title="Deep Research") as ui:
