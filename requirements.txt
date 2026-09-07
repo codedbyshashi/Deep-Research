@@ -3,3 +3,4 @@ openai
 python-dotenv
 pydantic
 tavily-python
+gradio==6.26.0
