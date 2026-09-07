@@ -16,6 +16,7 @@ load_dotenv(env_path, override=True)
 # API keys
 openrouter_api_key = os.getenv("OPENROUTER_API_KEY")
 gemini_api_key = os.getenv("GEMINI_API_KEY")
+groq_api_key = os.getenv("GROQ_API_KEY")
 
 
 # OpenRouter client
@@ -28,7 +29,10 @@ nvidia_client = AsyncOpenAI(
     base_url="https://openrouter.ai/api/v1",
     api_key=openrouter_api_key,
 )
-
+groq_client = AsyncOpenAI(
+    base_url="https://api.groq.com/openai/v1",
+    api_key=groq_api_key,
+)
 
 # Gemini client
 gemini_client = AsyncOpenAI(
@@ -53,6 +57,11 @@ nvidia_model = OpenAIChatCompletionsModel(
     openai_client=nvidia_client,
     model="nvidia/nemotron-3-super-120b-a12b:free",
 )
+groq_model = OpenAIChatCompletionsModel(
+    openai_client=groq_client,
+    model="openai/gpt-oss-120b",
+)
+
 
 
 deepseek_model = OpenAIChatCompletionsModel(

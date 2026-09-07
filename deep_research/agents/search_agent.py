@@ -2,7 +2,7 @@ from agents import Agent, ModelSettings, function_tool
 from dotenv import load_dotenv
 from tavily import TavilyClient
 import os
-from config import gemini_model, openrouter_model
+from config import gemini_model, groq_model, openrouter_model
 load_dotenv(override=True)
 
 # Tavily client
@@ -51,7 +51,7 @@ settings = ModelSettings(
 search_agent = Agent(
     name="search_agent",
     instructions=INSTRUCTIONS,
-    model=openrouter_model,
+    model=groq_model,
     tools=[web_search],
     model_settings=settings
 )
