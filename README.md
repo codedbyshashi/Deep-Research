@@ -1,13 +1,4 @@
 
-
-````markdown
----
-title: Deep Research
-sdk: gradio
-sdk_version: 6.26.0
-app_file: deep_research/app.py
----
-
 # 🔎 Deep Research AI Agent
 
 An AI-powered deep research system that autonomously plans searches, gathers information from the web, generates a detailed research report, and delivers the final report through email.
@@ -216,5 +207,3 @@ Computer Science & Engineering
 ---
 
 ⭐ If you find this project interesting, consider giving the repository a star.
-
-````
